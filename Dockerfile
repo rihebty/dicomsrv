@@ -1,6 +1,11 @@
 FROM ubuntu:noble
 
 ARG DEBIAN_FRONTEND=noninteractive
+# 替换 Ubuntu 镜像源为阿里云源（提高安装速度），并将 Ubuntu 版本改为 23.04（或 23.10）
+RUN sed -i 's|http://archive.ubuntu.com|https://mirrors.aliyun.com|g' /etc/apt/sources.list && \
+    sed -i 's|http://security.ubuntu.com|https://mirrors.aliyun.com|g' /etc/apt/sources.list && \
+    sed -i 's|lunar|noble|g' /etc/apt/sources.list && \
+    sed -i 's|jammy|noble|g' /etc/apt/sources.list
 RUN apt-get -q --fix-missing update -y
 # to install dicomweb and other plugins, see
 # https://book.orthanc-server.com/users/debian-packages.html#installation
